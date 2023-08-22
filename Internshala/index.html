@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized News</title>
+</head>
+<body>
+    <h1>Welcome to Personalized News</h1>
+
+    <!-- User preferences (replace with a real form) -->
+    <form>
+        <label for="tech">Tech</label>
+        <input type="checkbox" id="tech" name="preferences" value="Tech">
+        <label for="sports">Sports</label>
+        <input type="checkbox" id="sports" name="preferences" value="Sports">
+        <!-- Add more preferences here -->
+        <button type="submit">Save Preferences</button>
+    </form>
+
+    <!-- Display personalized news here -->
+    <div id="news-container"></div>
+
+    <script>
+        // Sample user ID (replace with real authentication)
+        const userId = "user123";
+
+        // Function to fetch personalized news
+        async function fetchNews() {
+            const response = await fetch(`/api/news?user_id=${userId}`);
+            const newsData = await response.json();
+
+            const newsContainer = document.getElementById("news-container");
+            newsContainer.innerHTML = "";
+
+            newsData.forEach(article => {
+                const articleElement = document.createElement("div");
+                articleElement.innerHTML = `<h2>${article.title}</h2><p>Category: ${article.category}</p>`;
+                newsContainer.appendChild(articleElement);
+            });
+        }
+
+        // Initial fetch when the page loads
+        fetchNews();
+    </script>
+</body>
+</html>
